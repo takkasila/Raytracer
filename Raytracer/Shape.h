@@ -17,7 +17,7 @@ public:
 		this->center = center;
 		this->radius = radius;
 	}
-	bool intersect(Ray& ray, float& outT)
+	bool Intersect(Ray& ray, float& outT)
 	{
 		vec3 centerToPoint = ray.point - center;
 		float a = dot(ray.dir, ray.dir);
@@ -29,8 +29,8 @@ public:
 		if (det < 0)
 			return false;
 
-		float root1 = -b + sqrt(det) / (2 * a);
-		float root2 = -b - sqrt(det) / (2 * a);
+		float root1 = (-b + sqrt(det)) / (2 * a);
+		float root2 = (-b - sqrt(det)) / (2 * a);
 
 		// Check result
 		if (root1 > 0 && root2 > 0)

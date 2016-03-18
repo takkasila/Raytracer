@@ -23,9 +23,9 @@ void Film::SetColor(int x, int y, BYTE R, BYTE G, BYTE B)
 void Film::SetColor(int x, int y, vec3 color)
 {
 	SetColor(x, y
-		, (int) clamp(color.r, (float) 0, (float) 1) * 255
-		, (int) clamp(color.g, (float) 0, (float) 1) * 255
-		, (int) clamp(color.b, (float) 0, (float) 1) * 255);
+		, clamp(color.r * 255, (float) 0, (float) 255)
+		, clamp(color.g * 255, (float) 0, (float) 255)
+		, clamp(color.b * 255, (float) 0, (float) 255));
 }
 
 void Film::SaveImage(const char* imgName)

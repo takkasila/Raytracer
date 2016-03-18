@@ -5,18 +5,24 @@
 #include "Ray.h"
 #include "Shape.h"
 #include "Camera.h"
+#include "Scene.h"
 
 int main(int argc, char* argv []) {
-	const int film_width = 500;
-	const int film_height = 500;
+	const int film_width = 800;
+	const int film_height = 640;
 
 	RayTracer raytracer;
 
-	Camera cam(vec3(0, 0, 0), vec3(0, 0, -1), vec2(3,3));
+	Camera cam(vec3(0, 0, 0), vec3(0, 0, -1), vec2(5,4));
 	
 	Film film1(film_width, film_height);
 
-	Sphere s1(vec3(0, 0, -5), 1);
+	Scene scene;
+	scene.objs.push_back(Sphere(vec3(0, 0, -1.7f), 1));
+	scene.objs.push_back(Sphere(vec3(0, 1, -1.7f), .5));
+	scene.objs.push_back(Sphere(vec3(0, -1, -1.7f), .5));
+	scene.objs.push_back(Sphere(vec3(1, 0, -1.7f), .5));
+	scene.objs.push_back(Sphere(vec3(-1, 0, -1.7f), .5));
 
 	for (int f1 = 0; f1 < film_height; f1++)
 	{
@@ -27,11 +33,12 @@ int main(int argc, char* argv []) {
 				,(float)f1/film_height * cam.plane_res.y - cam.plane_res.y/2 ,0) + cam.pos
 				, vec3(0, 0, -1), 1);
 			
-			film1.SetColor(f2, f1, raytracer.trace(ray, s1));
+			film1.SetColor(f2, f1, raytracer.trace(ray, scene));
 		}
 	}
 
 	film1.SaveImage("Image 1.png");
-	
+	film1.~Film();
+
 	return 0;
 }

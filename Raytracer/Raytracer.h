@@ -3,6 +3,7 @@
 #include "glm\glm.hpp"
 #include "Ray.h"
 #include "Shape.h"
+#include "Scene.h"
 
 using namespace glm;
 
@@ -10,7 +11,7 @@ class RayTracer
 {
 public:
 	RayTracer();
-	vec3 trace(Ray ray, Sphere sphere);
+	vec3 trace(Ray ray, Scene scene);
 private:
 
 };

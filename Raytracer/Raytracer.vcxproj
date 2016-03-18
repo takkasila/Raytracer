@@ -84,6 +84,7 @@
     <ClCompile Include="Film.cpp" />
     <ClCompile Include="Raytracer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
