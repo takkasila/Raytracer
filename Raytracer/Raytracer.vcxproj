@@ -88,10 +88,12 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Film.h" />
-    <ClInclude Include="Primitive.h" />
+    <ClInclude Include="GeometricPrimitive.h" />
+    <ClInclude Include="Ray.h" />
     <ClInclude Include="Raytracer.h" />
     <ClInclude Include="Sampler.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Shape.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
