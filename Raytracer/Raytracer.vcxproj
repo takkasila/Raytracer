@@ -81,6 +81,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Film.cpp" />
     <ClCompile Include="Raytracer.cpp" />
     <ClCompile Include="main.cpp" />
