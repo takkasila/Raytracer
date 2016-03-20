@@ -10,9 +10,9 @@ using namespace glm;
 class Camera
 {
 public:
-	Camera(vec3 pos = vec3(0, 0, 0)
+	Camera(vec3 pos = vec3(0, 0, -1)
 		, float aspectRatio = (float)5/4, float fovx = 60, float nearZplane = 0.3f)
-		:pos(pos), dir(vec3(0, 0, -1)), up(vec3(0,-1,0))
+		:pos(pos), dir(normalize(vec3(0, 0, -1))), up(vec3(0, 1, 0))
 		, aspectRatio(aspectRatio), fovx(fovx), nearZplane(nearZplane)
 	{
 		UpdateCamera(pos, aspectRatio, fovx, nearZplane);
@@ -34,7 +34,6 @@ private:
 	vec3 worldScreenSpace;
 	vec3 horizonFactor;
 	vec3 verticleFactor;
-
 };
 
 #endif

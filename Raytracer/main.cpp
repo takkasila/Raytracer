@@ -1,5 +1,7 @@
 #include<stdio.h>
 #include "glm\glm.hpp"
+#include "glm\gtx\rotate_vector.hpp"
+
 #include "Film.h"
 #include "Raytracer.h"
 #include "Ray.h"
@@ -11,13 +13,19 @@ int main(int argc, char* argv []) {
 	const int film_width = 800;
 	const int film_height = 640;
 
+	//vec3 v1(1, 0, 0);
+	//v1 = rotateY(v1,(float) M_PI/2);
+
 	RayTracer raytracer;
 
-	Camera camera(vec3(0,0,0),1.25f,60,0.4f);
+	Camera camera(vec3(0,0,3),1.25f,60,0.3f);
+
+	Ray ray = camera.GenerateRay( film_width/2.f, film_height/2.f);
 
 	Film film1(film_width, film_height);
 
 	Scene scene;
+	scene.objs.push_back(Sphere(vec3(0, 0, -5), 1));
 	for (int f1 = 0; f1 < 12; f1++)
 	{
 		scene.objs.push_back(Sphere(vec3(-1.5, -1.5, -3 - f1 * 3.5), 1));
