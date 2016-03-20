@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include "glm\glm.hpp"
-#include "glm\gtx\rotate_vector.hpp"
+#include <stdio.h>
 
 #include "Film.h"
 #include "Raytracer.h"
@@ -13,23 +13,28 @@ int main(int argc, char* argv []) {
 	const int film_width = 800;
 	const int film_height = 640;
 
-	//vec3 v1(1, 0, 0);
-	//v1 = rotateY(v1,(float) M_PI/2);
-
 	RayTracer raytracer;
 
-	Camera camera(vec3(0,0,3),1.25f,60,0.3f);
+	Camera camera(vec3(0, 0, 2),1.25f,60,0.3f);
+	camera.Rotate(vec3(0, 0, 0));
 
 	Ray ray = camera.GenerateRay( film_width/2.f, film_height/2.f);
 
 	Film film1(film_width, film_height);
 
 	Scene scene;
-	scene.objs.push_back(Sphere(vec3(0, 0, -5), 1));
-	for (int f1 = 0; f1 < 12; f1++)
+
+	float length = 3.2f;
+	int n = 6;
+	float delta = length / n;
+	
+	for (int f1 = 0; f1 < n; f1++)
 	{
-		scene.objs.push_back(Sphere(vec3(-1.5, -1.5, -3 - f1 * 3.5), 1));
-		scene.objs.push_back(Sphere(vec3(1.5, 1.5, -3 - f1 * 3.5), 1));
+		for (int f2 = 0; f2 < n; f2++)
+		{
+			for (int f3 = 0; f3 < n+2; f3++)
+			scene.objs.push_back(Sphere(vec3(-length/2 + f2*delta, -length/2 + f1*delta,-f3*delta),0.1f));
+		}
 	}
 
 	for (int f1 = 0; f1 < film_height; f1++)
@@ -38,7 +43,14 @@ int main(int argc, char* argv []) {
 		{
 			Ray ray = camera.GenerateRay((f2+0.5f)/film_width, (f1+0.5f)/film_height);
 			film1.SetColor(f2, f1, raytracer.trace(ray, scene));
+
 		}
+		if (f1 == (int) (film_height / 4))
+			printf("25\%\n");
+		else if (f1 == (int) (film_height / 2))
+			printf("50\%\n");
+		else if (f1 == (int) ((float)(2* film_height)/3 ))
+			printf("75\%\n");
 	}
 
 	film1.SaveImage("Image 1.png");

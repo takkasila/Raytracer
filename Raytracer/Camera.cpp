@@ -23,5 +23,16 @@ Ray Camera::GenerateRay(float i, float j)
 
 void Camera::Rotate(vec3 rotation)
 {
+	//vec3 v1(1, 0, 0);
+	//v1 = rotateY(v1,(float) M_PI/2);
+	rotation *= M_PI / 180;
+	dir = rotateX(dir, rotation.x);
+	dir = rotateY(dir, rotation.y);
+	dir = rotateZ(dir, rotation.z);
 
+	up = rotateX(up, rotation.x);
+	up = rotateY(up, rotation.y);
+	up = rotateZ(up, rotation.z);
+
+	UpdateCamera(pos, aspectRatio, fovx, nearZplane);
 }
