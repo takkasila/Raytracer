@@ -15,15 +15,19 @@ int main(int argc, char* argv []) {
 
 	RayTracer raytracer;
 
-	Camera camera(vec3(0, 0, 2),1.25f,60,0.3f);
-	camera.Rotate(vec3(0, 0, 0));
+	Camera camera(vec3(3, 3, 3),1.25f,60,0.3f);
+	camera.Rotate(vec3(-30, 30, 0));
 
 	Film film1(film_width, film_height);
 
 	Scene scene;
 
-	scene.objs.push_back(Sphere(vec3(1, 1, -2), 1));
-	scene.objs.push_back(Sphere(vec3(-1, -1, -2), 0.5f));
+	scene.objs.push_back(Sphere(vec3(0, 0, 0), 1, vec3(1, 0, 0)));
+	scene.objs.push_back(Sphere(vec3(0, 0, -2), 1, vec3(1, 1, 0)));
+	scene.objs.push_back(Sphere(vec3(0, 0, -4), 1, vec3(0, 1, 0)));
+	scene.objs.push_back(Sphere(vec3(0, 0, -6), 1, vec3(0, 1, 1)));
+	scene.objs.push_back(Sphere(vec3(0, 0, -8), 1, vec3(0, 0, 1)));
+	scene.objs.push_back(Sphere(vec3(0, 0, -10), 1, vec3(1, 0, 1)));
 
 	for (int f1 = 0; f1 < film_height; f1++)
 	{
