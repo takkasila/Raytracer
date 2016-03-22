@@ -6,7 +6,6 @@
 #include "glm\gtx\rotate_vector.hpp"
 #include "Ray.h"
 
-
 using namespace glm;
 
 class Camera

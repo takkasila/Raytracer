@@ -18,25 +18,12 @@ int main(int argc, char* argv []) {
 	Camera camera(vec3(0, 0, 2),1.25f,60,0.3f);
 	camera.Rotate(vec3(0, 0, 0));
 
-	Ray ray = camera.GenerateRay( film_width/2.f, film_height/2.f);
-
 	Film film1(film_width, film_height);
 
 	Scene scene;
 
 	scene.objs.push_back(Sphere(vec3(1, 1, -2), 1));
-	/*float length = 1;
-	int n = 2;
-	float delta = length / (n-1);
-	
-	for (int f1 = 0; f1 < n; f1++)
-	{
-		for (int f2 = 0; f2 < n; f2++)
-		{
-			for (int f3 = 0; f3 < n+1; f3++)
-			scene.objs.push_back(Sphere(vec3(-length/2 + f2*delta, -length/2 + f1*delta,-f3*delta),0.1f));
-		}
-	}*/
+	scene.objs.push_back(Sphere(vec3(-1, -1, -2), 0.5f));
 
 	for (int f1 = 0; f1 < film_height; f1++)
 	{

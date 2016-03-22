@@ -86,11 +86,13 @@
     <ClCompile Include="Raytracer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Shape.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Film.h" />
     <ClInclude Include="GeometricPrimitive.h" />
+    <ClInclude Include="Intersect.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Raytracer.h" />
     <ClInclude Include="Sampler.h" />

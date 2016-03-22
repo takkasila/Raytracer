@@ -12,7 +12,6 @@ public:
 	{}
 	vec3 point, dir;
 	float t;
-	
 };
 
 #endif

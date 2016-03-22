@@ -12,39 +12,18 @@ public:
 class Sphere
 {
 public:
-	Sphere(vec3 center, float radius)
-	{
-		this->center = center;
-		this->radius = radius;
-	}
-	bool Intersect(Ray& ray, float& outT)
-	{
-		vec3 centerToPoint = ray.point - center;
-		float a = dot(ray.dir, ray.dir);
-		float b = 2 * dot(ray.dir, centerToPoint);
-		float c = dot(centerToPoint, centerToPoint) - (radius*radius);
+	Sphere(vec3 center = vec3(0, 0, 0), float radius = 1
+		, vec3 diffuseMatColor = vec3((float) 0xcc / 255, (float) 0x70 / 255, (float) 0xa3 / 255)
+		, float specular = 0.5)
+		:center(center), radius(radius), diffuseMatColor(diffuseMatColor), specular(specular)
+	{}
+	bool Intersect(Ray ray, float& outT);
 
-		// Solve quadratic equation
-		float det = b*b - 4 * a*c;
-		if (det < 0)
-			return false;
-
-		float root1 = (-b + sqrt(det)) / (2 * a);
-		float root2 = (-b - sqrt(det)) / (2 * a);
-
-		// Check result
-		if (root1 > 0 && root2 > 0)
-			outT = min(root1, root2);
-		else
-			outT = max(root1, root2);
-
-		return true;
-	}
 	vec3 center;
 	float radius;
-
-private:
-
+	vec3 diffuseMatColor;
+	vec3 specularMatColor;
+	float specular;
 };
 
 #endif
