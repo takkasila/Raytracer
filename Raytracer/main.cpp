@@ -24,33 +24,34 @@ int main(int argc, char* argv []) {
 
 	Scene scene;
 
-	float length = 3.2f;
-	int n = 6;
-	float delta = length / n;
+	scene.objs.push_back(Sphere(vec3(1, 1, -2), 1));
+	/*float length = 1;
+	int n = 2;
+	float delta = length / (n-1);
 	
 	for (int f1 = 0; f1 < n; f1++)
 	{
 		for (int f2 = 0; f2 < n; f2++)
 		{
-			for (int f3 = 0; f3 < n+2; f3++)
+			for (int f3 = 0; f3 < n+1; f3++)
 			scene.objs.push_back(Sphere(vec3(-length/2 + f2*delta, -length/2 + f1*delta,-f3*delta),0.1f));
 		}
-	}
+	}*/
 
 	for (int f1 = 0; f1 < film_height; f1++)
 	{
 		for (int f2 = 0; f2 < film_width; f2++)
 		{
 			Ray ray = camera.GenerateRay((f2+0.5f)/film_width, (f1+0.5f)/film_height);
-			film1.SetColor(f2, f1, raytracer.trace(ray, scene));
+			film1.SetColor(f2, film_height - f1, raytracer.trace(ray, scene));
 
 		}
 		if (f1 == (int) (film_height / 4))
-			printf("25\%\n");
+			printf("25%%\n");
 		else if (f1 == (int) (film_height / 2))
-			printf("50\%\n");
+			printf("50%%\n");
 		else if (f1 == (int) ((float)(2* film_height)/3 ))
-			printf("75\%\n");
+			printf("75%%\n");
 	}
 
 	film1.SaveImage("Image 1.png");
