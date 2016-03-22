@@ -31,8 +31,9 @@ int main(int argc, char* argv []) {
 		{
 			Ray ray = camera.GenerateRay((f2+0.5f)/film_width, (f1+0.5f)/film_height);
 			film1.SetColor(f2, film_height - f1, raytracer.trace(ray, scene));
-
 		}
+
+		// Checking progress
 		if (f1 == (int) (film_height / 4))
 			printf("25%%\n");
 		else if (f1 == (int) (film_height / 2))

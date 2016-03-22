@@ -4,20 +4,20 @@
 #include <vector>
 
 #include "Shape.h"
+#include "IntersectInfo.h"
 
 using namespace std;
 
 class Scene
 {
 public:
-	Scene()
-	{
-	}
+	Scene(vec3 bgColor = vec3((float) 224 / 255, (float) 230 / 255, (float) 237 / 255))
+		:bgColor(bgColor)
+	{}
+	bool Intersect(Ray& ray, float& t, IntersectInfo& info);
+
 	vector<Sphere> objs;
-	bool Intersect(Ray& ray, float& t);
-
-private:
-
+	vec3 bgColor;
 };
 
 #endif

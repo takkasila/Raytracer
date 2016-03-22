@@ -59,7 +59,7 @@
     <ClInclude Include="Shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersect.h">
+    <ClInclude Include="IntersectInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

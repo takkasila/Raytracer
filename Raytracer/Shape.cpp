@@ -1,6 +1,6 @@
 #include "Shape.h"
 
-bool Sphere::Intersect(Ray ray, float& outT)
+bool Sphere::Intersect(Ray& ray, float& outT, IntersectInfo& info)
 {
 	vec3 centerToPoint = ray.point - center;
 	float a = dot(ray.dir, ray.dir);
@@ -20,6 +20,10 @@ bool Sphere::Intersect(Ray ray, float& outT)
 		outT = min(root1, root2);
 	else
 		outT = max(root1, root2);
+
+	info.point = ray.point + ray.dir * outT;
+	info.diffuseMatColor = diffuseMatColor;
+	// Todo : Add normal vector
 
 	return true;
 }
