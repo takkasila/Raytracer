@@ -1,8 +1,6 @@
 #ifndef INTERSECT_H
 #define INTERSECT_H
 
-#include "Ray.h"
-
 class IntersectInfo
 {
 public:
@@ -14,7 +12,7 @@ public:
 	vec3 point;
 	vec3 normal;
 	vec3 diffuseMatColor;
-	
+	vec3 center;
 };
 
 #endif

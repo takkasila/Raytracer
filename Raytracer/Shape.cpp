@@ -1,19 +1,19 @@
 #include "Shape.h"
 
-bool Sphere::Intersect(Ray& ray, float& outT, IntersectInfo& info)
+bool Sphere::Intersect(Ray& ray, double& outT, IntersectInfo& info)
 {
 	vec3 centerToPoint = ray.point - center;
-	float a = dot(ray.dir, ray.dir);
-	float b = 2 * dot(ray.dir, centerToPoint);
-	float c = dot(centerToPoint, centerToPoint) - (radius*radius);
+	double a = dot(ray.dir, ray.dir);
+	double b = 2 * dot(ray.dir, centerToPoint);
+	double c = dot(centerToPoint, centerToPoint) - (radius*radius);
 
 	// Solve quadratic equation
-	float det = b*b - 4 * a*c;
-	if (det < 0)
+	double det = b*b - 4 * a*c;
+	if (det < 0.0f)
 		return false;
 
-	float root1 = (-b + sqrt(det)) / (2 * a);
-	float root2 = (-b - sqrt(det)) / (2 * a);
+	double root1 = (-b + sqrt(det)) / (2 * a);
+	double root2 = (-b - sqrt(det)) / (2 * a);
 
 	// Check result
 	if (root1 > 0 && root2 > 0)
@@ -21,9 +21,15 @@ bool Sphere::Intersect(Ray& ray, float& outT, IntersectInfo& info)
 	else
 		outT = max(root1, root2);
 
-	info.point = ray.point + ray.dir * outT;
+	if (outT < 0)
+		return false;
+	//if (abs(outT) < 0.0001)
+		//return false;
+
+	info.point = ray.point + ray.dir * (float)outT;
 	info.diffuseMatColor = diffuseMatColor;
-	// Todo : Add normal vector
+	info.normal = normalize(info.point - center);
+	info.center = center;
 
 	return true;
 }

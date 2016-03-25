@@ -22,6 +22,7 @@ int main(int argc, char* argv []) {
 
 	Scene scene;
 
+	scene.objs.push_back(Sphere(vec3(0, 0, 2), 1, vec3(1, 0.5f, 1)));
 	scene.objs.push_back(Sphere(vec3(0, 0, 0), 1, vec3(1, 0, 0)));
 	scene.objs.push_back(Sphere(vec3(0, 0, -2), 1, vec3(1, 1, 0)));
 	scene.objs.push_back(Sphere(vec3(0, 0, -4), 1, vec3(0, 1, 0)));

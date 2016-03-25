@@ -1,8 +1,8 @@
 #include "Scene.h"
 
-bool Scene::Intersect(Ray& ray, float& t, IntersectInfo& info)
+bool Scene::Intersect(Ray& ray, double& t, IntersectInfo& info)
 {
-	float minT = t;
+	double minT = t;
 	bool isHit = false;
 
 	IntersectInfo tempInfo;

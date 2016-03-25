@@ -3,7 +3,6 @@
 
 #include "Ray.h"
 #include "IntersectInfo.h"
-
 class Shape
 {
 public:
@@ -19,7 +18,7 @@ public:
 		, float specular = 0.5)
 		:center(center), radius(radius), diffuseMatColor(diffuseMatColor), specular(specular)
 	{}
-	bool Intersect(Ray& ray, float& outT, IntersectInfo& info);
+	bool Intersect(Ray& ray, double& outT, IntersectInfo& info);
 
 	vec3 center;
 	float radius;

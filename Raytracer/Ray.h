@@ -7,11 +7,11 @@ using namespace glm;
 class Ray
 {
 public:
-	Ray(vec3 point = vec3(0, 0, 0), vec3 dir = vec3(0, 0, -1), float t = 1)
+	Ray(vec3 point = vec3(0, 0, 0), vec3 dir = vec3(0, 0, -1), double t = 1)
 		: point(point), dir(dir), t(t)
 	{}
 	vec3 point, dir;
-	float t;
+	double t;
 };
 
 #endif

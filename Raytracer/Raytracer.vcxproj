@@ -93,6 +93,7 @@
     <ClInclude Include="Film.h" />
     <ClInclude Include="GeometricPrimitive.h" />
     <ClInclude Include="IntersectInfo.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Raytracer.h" />
     <ClInclude Include="Sampler.h" />
