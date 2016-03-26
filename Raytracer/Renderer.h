@@ -19,8 +19,8 @@ public:
 	}
 
 	void Render();
+	vec3 EvaluateLight(Ray ray, IntersectInfo info);
 
-	vec3 trace(Ray ray);
 	Scene scene;
 	Camera cam;
 };

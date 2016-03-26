@@ -8,7 +8,19 @@ void Renderer::Render()
 		for (int f2 = 0; f2 < cam.film->width; f2++)
 		{
 			Ray ray = cam.GenerateRay((f2 + 0.5f) / cam.film->width, (f1 + 0.5f) / cam.film->height);
-			cam.film->SetColor(f2, cam.film->height - f1-1, trace(ray));
+
+			IntersectInfo info;
+			if (scene.Intersect(ray, ray.t, info))
+			{
+				// Hit obj
+				cam.film->SetColor(f2, cam.film->height - f1 - 1, EvaluateLight(ray, info));
+			}
+			else
+			{
+				// Not hit obj
+				cam.film->SetColor(f2, cam.film->height - f1-1, scene.bgColor);
+			}
+
 		}
 
 		// Checking progress
@@ -23,26 +35,25 @@ void Renderer::Render()
 	cam.film->~Film();
 }
 
-vec3 Renderer::trace(Ray ray)
+
+vec3 Renderer::EvaluateLight(Ray ray, IntersectInfo info)
 {
-	vec3 white(1);
-	vec3 black(0);
 
-	IntersectInfo info;
-	if (scene.Intersect(ray, ray.t, info))
+	Ray rayToLight(info.point + 0.01f*info.normal);
+	vec3 totalColor(0);
+	for (int f1 = 0; f1 < scene.lights.size(); f1++)
 	{
-		Ray rayToLight(info.point + 0.01f*info.normal);
-
-		vec3 totalColor(0);
-		for (int f1 = 0; f1 < scene.lights.size(); f1++)
+		rayToLight.dir = normalize(scene.lights[f1].pos - rayToLight.point);
+		IntersectInfo toLightInfo;
+		if (!scene.Intersect(rayToLight, rayToLight.t, toLightInfo))
 		{
-			rayToLight.dir = normalize(scene.lights[f1].pos - rayToLight.point);
-			IntersectInfo toLightInfo;
-			if (!scene.Intersect(rayToLight, rayToLight.t, toLightInfo))
-				totalColor += info.diffuseMatColor;
+			// Diffuse
+			float dotProd = max(0.f, dot(info.normal, rayToLight.dir));
+			vec3 diffuseTerm = info.diffuseMatColor * scene.lights[f1].IntensAtPoint(info.point)* dotProd;
+			totalColor += diffuseTerm;
 		}
-		return totalColor;
 	}
-	else
-		return scene.bgColor;
+	vec3 ambientTerm = scene.ambientColor * scene.ambientIntense * info.diffuseMatColor;
+	totalColor += ambientTerm;
+	return totalColor;
 }

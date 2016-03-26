@@ -83,6 +83,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Film.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene.cpp" />
