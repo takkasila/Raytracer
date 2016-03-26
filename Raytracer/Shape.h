@@ -14,8 +14,8 @@ class Sphere
 public:
 	Sphere(vec3 center = vec3(0, 0, 0), float radius = 1
 		, vec3 diffuseMatColor = vec3((float) 0xcc / 255, (float) 0x70 / 255, (float) 0xa3 / 255)
-		, float specular = 0.5)
-		:center(center), radius(radius), diffuseMatColor(diffuseMatColor), specular(specular)
+		, float shininess = 16)
+		:center(center), radius(radius), diffuseMatColor(diffuseMatColor), specularMatColor(diffuseMatColor), shininess(shininess)
 	{}
 	bool Intersect(Ray& ray, double& outT, IntersectInfo& info);
 
@@ -23,7 +23,7 @@ public:
 	float radius;
 	vec3 diffuseMatColor;
 	vec3 specularMatColor;
-	float specular;
+	float shininess;
 };
 
 #endif

@@ -51,6 +51,14 @@ vec3 Renderer::EvaluateLight(Ray ray, IntersectInfo info)
 			float dotProd = max(0.f, dot(info.normal, rayToLight.dir));
 			vec3 diffuseTerm = info.diffuseMatColor * scene.lights[f1].IntensAtPoint(info.point)* dotProd;
 			totalColor += diffuseTerm;
+
+			// Specular
+			vec3 pointToView = normalize(cam.pos - info.point);
+			vec3 halfVec = normalize(pointToView + rayToLight.dir);
+
+			float specAngle = max(dot(halfVec, info.normal), 0.f);
+			float specular = pow(specAngle, info.shininess);
+			totalColor += info.specularMatColor * specular;
 		}
 	}
 	vec3 ambientTerm = scene.ambientColor * scene.ambientIntense * info.diffuseMatColor;

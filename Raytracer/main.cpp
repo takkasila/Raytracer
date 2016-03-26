@@ -15,6 +15,7 @@ int main(int argc, char* argv []) {
 	camera.Rotate(vec3(0, 0, 0.5f));
 
 	Scene scene;
+	scene.bgColor = vec3(0.1f);
 	scene.ambientIntense = 0.2f;
 	// Test objs
 	scene.objs.push_back(Sphere(vec3(0.8, 1.5, 0), 1.5, vec3(210 / 255.f, 178 / 255.f, 158 / 255.f)));
@@ -22,7 +23,7 @@ int main(int argc, char* argv []) {
 	scene.objs.push_back(Sphere(vec3(0, -10000, 0), 10000, vec3(85 / 255.f, 62 / 255.f, 82 / 255.f)));
 	// Test lights
 	scene.lights.push_back(Light(vec3(3, 7, 3), vec3(1), 50));
-	//scene.lights.push_back(Light(vec3(-3, 7, 3), vec3(1), 50));
+	scene.lights.push_back(Light(vec3(-8, 3, 6), vec3(1), 40));
 
 	Renderer renderer(scene, camera);
 	renderer.Render();

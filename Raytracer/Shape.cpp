@@ -30,6 +30,8 @@ bool Sphere::Intersect(Ray& ray, double& outT, IntersectInfo& info)
 	info.diffuseMatColor = diffuseMatColor;
 	info.normal = normalize(info.point - center);
 	info.center = center;
+	info.specularMatColor = specularMatColor;
+	info.shininess = shininess;
 
 	return true;
 }
