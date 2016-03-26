@@ -8,7 +8,7 @@ void Renderer::Render()
 		for (int f2 = 0; f2 < cam.film->width; f2++)
 		{
 			Ray ray = cam.GenerateRay((f2 + 0.5f) / cam.film->width, (f1 + 0.5f) / cam.film->height);
-			cam.film->SetColor(f2, cam.film->height - f1, trace(ray));
+			cam.film->SetColor(f2, cam.film->height - f1-1, trace(ray));
 		}
 
 		// Checking progress
