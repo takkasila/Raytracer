@@ -7,7 +7,6 @@ class Shape
 {
 public:
 	virtual bool intersect(Ray& ray, float& outT);
-
 };
 
 class Sphere

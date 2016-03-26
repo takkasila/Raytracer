@@ -19,6 +19,5 @@ public:
 
 private:
 	FIBITMAP* imagePlane;
-
 };
 #endif

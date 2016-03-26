@@ -3,12 +3,12 @@
 void Camera::UpdateCamera(vec3 pos, float aspectRatio, float fovx, float nearZplane)
 {
 	vec2 planeSize;
-	planeSize.x = 2*tan(fovx/2 * M_PI/180) * nearZplane;
+	planeSize.x = 2 * tan(fovx / 2 * M_PI / 180) * nearZplane;
 	planeSize.y = planeSize.x / aspectRatio;
 
-	vec3 planeLeft = planeSize.x/2 * normalize(cross(up, dir));
-	vec3 planeUp = planeSize.y/2 * up;
-	
+	vec3 planeLeft = planeSize.x / 2 * normalize(cross(up, dir));
+	vec3 planeUp = planeSize.y / 2 * up;
+
 	worldScreenSpace = dir * nearZplane + planeLeft + planeUp;
 
 	horizonFactor = planeSize.x * normalize(-planeLeft);
@@ -18,7 +18,7 @@ void Camera::UpdateCamera(vec3 pos, float aspectRatio, float fovx, float nearZpl
 
 Ray Camera::GenerateRay(float i, float j)
 {
-	return Ray(pos, normalize( worldScreenSpace + i*horizonFactor + j*verticleFactor ), 1);
+	return Ray(pos, normalize(worldScreenSpace + i*horizonFactor + j*verticleFactor), 1);
 }
 
 void Camera::Rotate(vec3 rotation)

@@ -83,7 +83,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Film.cpp" />
-    <ClCompile Include="Raytracer.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shape.cpp" />
@@ -95,7 +95,7 @@
     <ClInclude Include="IntersectInfo.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Ray.h" />
-    <ClInclude Include="Raytracer.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Sampler.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shape.h" />

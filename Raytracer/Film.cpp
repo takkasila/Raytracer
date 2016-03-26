@@ -33,7 +33,6 @@ void Film::SaveImage(const char* imgName)
 	FreeImage_Save(FIF_PNG, imagePlane, imgName, 0);
 }
 
-
 Film::~Film()
 {
 	FreeImage_DeInitialise();

@@ -7,7 +7,6 @@ public:
 	Sample();
 
 private:
-
 };
 
 Sample::Sample()

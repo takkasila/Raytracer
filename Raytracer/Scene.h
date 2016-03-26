@@ -5,6 +5,7 @@
 
 #include "Shape.h"
 #include "IntersectInfo.h"
+#include "Light.h"
 
 using namespace std;
 
@@ -17,6 +18,7 @@ public:
 	bool Intersect(Ray& ray, double& t, IntersectInfo& info);
 
 	vector<Sphere> objs;
+	vector<Light> lights;
 	vec3 bgColor;
 };
 

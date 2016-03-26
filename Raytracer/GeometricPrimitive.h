@@ -6,8 +6,6 @@ class GeometricPrimitive
 {
 public:
 	virtual bool intersect(Ray& ray, float& outT);
-
-
 };
 
 #endif
