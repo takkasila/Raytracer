@@ -2,28 +2,19 @@
 #define SHAPE_H
 
 #include "Ray.h"
-#include "IntersectInfo.h"
-class Shape
-{
-public:
-	virtual bool intersect(Ray& ray, float& outT);
-};
-
 class Sphere
 {
 public:
-	Sphere(vec3 center = vec3(0, 0, 0), float radius = 1
+	/*Sphere(vec3 center = vec3(0, 0, 0), float radius = 1
 		, vec3 diffuseMatColor = vec3((float) 0xcc / 255, (float) 0x70 / 255, (float) 0xa3 / 255)
-		, float shininess = 16)
-		:center(center), radius(radius), diffuseMatColor(diffuseMatColor), specularMatColor(diffuseMatColor), shininess(shininess)
+		, float shininess = 16)*/
+	Sphere(vec3 center = vec3(0, 0, 0), float radius = 1)
+		:center(center), radius(radius)
 	{}
-	bool Intersect(Ray& ray, double& outT, IntersectInfo& info);
+	bool Intersect(Ray& ray, double& outT);
 
 	vec3 center;
 	float radius;
-	vec3 diffuseMatColor;
-	vec3 specularMatColor;
-	float shininess;
 };
 
 #endif

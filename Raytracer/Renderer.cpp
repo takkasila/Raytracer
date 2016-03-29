@@ -39,7 +39,7 @@ void Renderer::Render()
 vec3 Renderer::EvaluateLight(Ray ray, IntersectInfo info)
 {
 
-	Ray rayToLight(info.point + 0.01f*info.normal);
+	Ray rayToLight(info.surfacePoint + 0.01f*info.surfaceNormal);
 	vec3 totalColor(0);
 	for (int f1 = 0; f1 < scene.lights.size(); f1++)
 	{
@@ -48,20 +48,20 @@ vec3 Renderer::EvaluateLight(Ray ray, IntersectInfo info)
 		if (!scene.Intersect(rayToLight, rayToLight.t, toLightInfo))
 		{
 			// Diffuse
-			float dotProd = max(0.f, dot(info.normal, rayToLight.dir));
-			vec3 diffuseTerm = info.diffuseMatColor * scene.lights[f1].IntensAtPoint(info.point)* dotProd;
+			float dotProd = max(0.f, dot(info.surfaceNormal, rayToLight.dir));
+			vec3 diffuseTerm = info.material.diffuse * scene.lights[f1].IntensAtPoint(info.surfacePoint)* dotProd;
 			totalColor += diffuseTerm;
 
 			// Specular
-			vec3 pointToView = normalize(cam.pos - info.point);
+			vec3 pointToView = normalize(cam.pos - info.surfacePoint);
 			vec3 halfVec = normalize(pointToView + rayToLight.dir);
 
-			float specAngle = max(dot(halfVec, info.normal), 0.f);
-			float specular = pow(specAngle, info.shininess);
-			totalColor += info.specularMatColor * specular;
+			float specAngle = max(dot(halfVec, info.surfaceNormal), 0.f);
+			float specular = pow(specAngle, info.material.shininess);
+			totalColor += info.material.diffuse * specular;
 		}
 	}
-	vec3 ambientTerm = scene.ambientColor * scene.ambientIntense * info.diffuseMatColor;
+	vec3 ambientTerm = scene.ambientColor * scene.ambientIntense * info.material.diffuse;
 	totalColor += ambientTerm;
 	return totalColor;
 }

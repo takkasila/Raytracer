@@ -1,6 +1,6 @@
 #include "Shape.h"
 
-bool Sphere::Intersect(Ray& ray, double& outT, IntersectInfo& info)
+bool Sphere::Intersect(Ray& ray, double& outT)
 {
 	vec3 centerToPoint = ray.point - center;
 	double a = dot(ray.dir, ray.dir);
@@ -23,15 +23,6 @@ bool Sphere::Intersect(Ray& ray, double& outT, IntersectInfo& info)
 
 	if (outT < 0)
 		return false;
-	//if (abs(outT) < 0.0001)
-	//return false;
-
-	info.point = ray.point + ray.dir * (float) outT;
-	info.diffuseMatColor = diffuseMatColor;
-	info.normal = normalize(info.point - center);
-	info.center = center;
-	info.specularMatColor = specularMatColor;
-	info.shininess = shininess;
 
 	return true;
 }

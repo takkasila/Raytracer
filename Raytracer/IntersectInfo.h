@@ -1,21 +1,18 @@
 #ifndef INTERSECT_H
 #define INTERSECT_H
 
+#include "Material.h"
+
 class IntersectInfo
 {
 public:
 	IntersectInfo(){}
-	IntersectInfo(vec3 point, vec3 normal, vec3 diffuseMatColor = vec3(0, 0, 0))
-		:point(point), normal(normal), diffuseMatColor(diffuseMatColor)
+	IntersectInfo(vec3 surfacePoint, vec3 surfaceNormal, Material mat)
+		:surfacePoint(surfacePoint), surfaceNormal(surfaceNormal), material(material)
 	{}
-
-	vec3 point;
-	vec3 normal;
-	vec3 diffuseMatColor;
-	vec3 specularMatColor;
-	float diffuseFactor;
-	float shininess;
-	vec3 center;
+	vec3 surfacePoint;
+	vec3 surfaceNormal;
+	Material material;
 };
 
 #endif

@@ -84,6 +84,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Film.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -95,6 +96,8 @@
     <ClInclude Include="GeometricPrimitive.h" />
     <ClInclude Include="IntersectInfo.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="Primitive.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Sampler.h" />
