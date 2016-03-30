@@ -31,7 +31,8 @@ int main(int argc, char* argv []) {
 	scene.lights.push_back(Light(vec3(3, 7, 3), vec3(1), 50));
 	scene.lights.push_back(Light(vec3(-8, 3, 6), vec3(1), 40));
 
-	Renderer renderer(scene, camera);
+	Sampler sampler(camera, 4, 4);
+	Renderer renderer(scene, camera, sampler);
 	renderer.Render();
 
 	return 0;

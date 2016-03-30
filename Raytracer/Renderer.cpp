@@ -17,8 +17,12 @@ void Renderer::Render()
 			printf("50%%\n");
 		else if (f1 == (int) ((float) (2 * cam.film->height) / 3))
 			printf("75%%\n");
+		else if (f1 == cam.film->height)
+			printf("100%%\n");
 	}
+	printf("Saving picture.\n");
 	cam.film->SaveImage("Image 1.png");
+	printf("Finished saving picture.\n");
 	cam.film->~Film();
 }
 
@@ -26,23 +30,25 @@ void Renderer::Render()
 vec3 Renderer::EvaluateLight(int x, int y)
 {
 	vec3 totalColor(0);
-
-	Ray ray = cam.GenerateRay((x + 0.5f) / cam.film->width, (y + 0.5f) / cam.film->height);
-	IntersectInfo info;
+	sampler.SetSampler(x, y);
+	for (int i = 0; i < sampler.GetSamplingTimes(); i++)
+	{
+		Ray ray = sampler.GetSamplingRay();
+		IntersectInfo info;
 	
-	if (scene.Intersect(ray, ray.t, info))
-	{
-		// Hit obj
-		totalColor = Shading(ray, info);
-	}
-	else
-	{
-		// Not hit obj
-		totalColor = scene.bgColor;
+		if (scene.Intersect(ray, ray.t, info))
+		{
+			// Hit obj
+			totalColor += Shading(ray, info);
+		}
+		else
+		{
+			// Not hit obj
+			totalColor += scene.bgColor;
+		}
 	}
 
-	return totalColor;
-
+	return totalColor / (float)sampler.GetSamplingTimes();
 }
 
 
