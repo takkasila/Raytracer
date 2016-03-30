@@ -7,20 +7,7 @@ void Renderer::Render()
 	{
 		for (int f2 = 0; f2 < cam.film->width; f2++)
 		{
-			Ray ray = cam.GenerateRay((f2 + 0.5f) / cam.film->width, (f1 + 0.5f) / cam.film->height);
-
-			IntersectInfo info;
-			if (scene.Intersect(ray, ray.t, info))
-			{
-				// Hit obj
-				cam.film->SetColor(f2, cam.film->height - f1 - 1, EvaluateLight(ray, info));
-			}
-			else
-			{
-				// Not hit obj
-				cam.film->SetColor(f2, cam.film->height - f1-1, scene.bgColor);
-			}
-
+			cam.film->SetColor(f2, cam.film->height - f1 - 1, EvaluateLight(f2, f1));
 		}
 
 		// Checking progress
@@ -36,20 +23,42 @@ void Renderer::Render()
 }
 
 
-vec3 Renderer::EvaluateLight(Ray ray, IntersectInfo info)
+vec3 Renderer::EvaluateLight(int x, int y)
 {
+	vec3 totalColor(0);
 
+	Ray ray = cam.GenerateRay((x + 0.5f) / cam.film->width, (y + 0.5f) / cam.film->height);
+	IntersectInfo info;
+	
+	if (scene.Intersect(ray, ray.t, info))
+	{
+		// Hit obj
+		totalColor = Shading(ray, info);
+	}
+	else
+	{
+		// Not hit obj
+		totalColor = scene.bgColor;
+	}
+
+	return totalColor;
+
+}
+
+
+vec3 Renderer::Shading(Ray& ray, IntersectInfo info)
+{
 	Ray rayToLight(info.surfacePoint + 0.01f*info.surfaceNormal);
 	vec3 totalColor(0);
-	for (int f1 = 0; f1 < scene.lights.size(); f1++)
+	for each (Light light in scene.lights)
 	{
-		rayToLight.dir = normalize(scene.lights[f1].pos - rayToLight.point);
+		rayToLight.dir = normalize(light.pos - rayToLight.point);
 		IntersectInfo toLightInfo;
 		if (!scene.Intersect(rayToLight, rayToLight.t, toLightInfo))
 		{
 			// Diffuse
 			float dotProd = max(0.f, dot(info.surfaceNormal, rayToLight.dir));
-			vec3 diffuseTerm = info.material.diffuse * scene.lights[f1].IntensAtPoint(info.surfacePoint)* dotProd;
+			vec3 diffuseTerm = info.material.diffuse * light.IntensAtPoint(info.surfacePoint)* dotProd;
 			totalColor += diffuseTerm;
 
 			// Specular
@@ -61,6 +70,7 @@ vec3 Renderer::EvaluateLight(Ray ray, IntersectInfo info)
 			totalColor += info.material.diffuse * specular;
 		}
 	}
+
 	vec3 ambientTerm = scene.ambientColor * scene.ambientIntense * info.material.diffuse;
 	totalColor += ambientTerm;
 	return totalColor;

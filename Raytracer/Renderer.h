@@ -15,14 +15,17 @@ class Renderer
 public:
 	Renderer(Scene scene, Camera cam)
 		:scene(scene), cam(cam)
-	{
-	}
+	{}
 
 	void Render();
-	vec3 EvaluateLight(Ray ray, IntersectInfo info);
 
 	Scene scene;
 	Camera cam;
+
+private:
+	vec3 EvaluateLight(int x, int y);
+	vec3 Shading(Ray& ray, IntersectInfo info);
+
 };
 
 #endif
