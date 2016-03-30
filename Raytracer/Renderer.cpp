@@ -17,12 +17,9 @@ void Renderer::Render()
 			printf("50%%\n");
 		else if (f1 == (int) ((float) (2 * cam.film->height) / 3))
 			printf("75%%\n");
-		else if (f1 == cam.film->height)
-			printf("100%%\n");
 	}
-	printf("Saving picture.\n");
+	printf("100%%\n");
 	cam.film->SaveImage("Image 1.png");
-	printf("Finished saving picture.\n");
 	cam.film->~Film();
 }
 
@@ -65,15 +62,15 @@ vec3 Renderer::Shading(Ray& ray, IntersectInfo info)
 			// Diffuse
 			float dotProd = max(0.f, dot(info.surfaceNormal, rayToLight.dir));
 			vec3 diffuseTerm = info.material.diffuse * light.IntensAtPoint(info.surfacePoint)* dotProd;
-			totalColor += diffuseTerm;
+			totalColor += diffuseTerm * info.material.diffuseCoeff;
 
 			// Specular
 			vec3 pointToView = normalize(cam.pos - info.surfacePoint);
 			vec3 halfVec = normalize(pointToView + rayToLight.dir);
-
 			float specAngle = max(dot(halfVec, info.surfaceNormal), 0.f);
-			float specular = pow(specAngle, info.material.shininess);
-			totalColor += info.material.diffuse * specular;
+
+			totalColor += light.color * light.IntensAtPoint(info.surfacePoint)
+				*info.material.specularCoeff * pow(specAngle, info.material.specularPowFactor);
 		}
 	}
 

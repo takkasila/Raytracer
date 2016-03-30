@@ -15,17 +15,17 @@ int main(int argc, char* argv []) {
 
 	Scene scene;
 	scene.bgColor = vec3(0.1f);
-	scene.ambientIntense = 0.2f;
+	scene.ambientIntense = 0;
 	// Test objs
 	scene.objs.push_back(Primitive(
 		Sphere(vec3(0.8, 1.5, 0), 1.5)
-		, Material(vec3(210 / 255.f, 178 / 255.f, 158 / 255.f), 1, 16)));
+		, Material(vec3(210 / 255.f, 178 / 255.f, 158 / 255.f))));
 	scene.objs.push_back(Primitive(
 		Sphere(vec3(-1.7, 0.5, 0), 0.5)
-		, Material(vec3(83 / 255.f, 132 / 255.f, 162 / 255.f), 1, 16)));
+		, Material(vec3(83 / 255.f, 132 / 255.f, 162 / 255.f))));
 	scene.objs.push_back(Primitive(
 		Sphere(vec3(0, -10000, 0), 10000)
-		, Material(vec3(85 / 255.f, 62 / 255.f, 82 / 255.f), 1, 16)));
+		, Material(vec3(85 / 255.f, 62 / 255.f, 82 / 255.f))));
 
 	// Test lights
 	scene.lights.push_back(Light(vec3(3, 7, 3), vec3(1), 50));
