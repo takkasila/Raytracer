@@ -14,8 +14,8 @@ using namespace glm;
 class Renderer
 {
 public:
-	Renderer(Scene scene, Camera cam, Sampler sampler)
-		:scene(scene), cam(cam), sampler(sampler)
+	Renderer(Scene scene, Camera cam, Sampler sampler, int maxDepth = 4)
+		:scene(scene), cam(cam), sampler(sampler), maxDepth(maxDepth)
 	{}
 
 	void Render();
@@ -23,10 +23,11 @@ public:
 	Scene scene;
 	Camera cam;
 	Sampler sampler;
+	int maxDepth;
 
 private:
 	vec3 EvaluateLight(int x, int y);
-	vec3 Shading(Ray& ray, IntersectInfo info);
+	vec3 Shading(Ray& ray, IntersectInfo info, int depth);
 
 };
 

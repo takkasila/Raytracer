@@ -36,7 +36,10 @@ vec3 Renderer::EvaluateLight(int x, int y)
 		if (scene.Intersect(ray, ray.t, info))
 		{
 			// Hit obj
-			totalColor += Shading(ray, info);
+			totalColor += Shading(ray, info, maxDepth);
+			// Ambient
+			vec3 ambientTerm = scene.ambientColor * scene.ambientIntense * info.material.diffuse;
+			totalColor += ambientTerm;
 		}
 		else
 		{
@@ -49,15 +52,18 @@ vec3 Renderer::EvaluateLight(int x, int y)
 }
 
 
-vec3 Renderer::Shading(Ray& ray, IntersectInfo info)
+vec3 Renderer::Shading(Ray& ray, IntersectInfo info, int depth)
 {
-	Ray rayToLight(info.surfacePoint + 0.01f*info.surfaceNormal);
 	vec3 totalColor(0);
+	Ray rayToLight(info.surfacePoint + 0.01f*info.surfaceNormal);
+	vec3 pointToView = normalize(cam.pos - rayToLight.point);
+
 	for each (Light light in scene.lights)
 	{
 		rayToLight.dir = normalize(light.pos - rayToLight.point);
 		IntersectInfo toLightInfo;
-		if (!scene.Intersect(rayToLight, rayToLight.t, toLightInfo))
+		bool isIntersect = scene.Intersect(rayToLight, rayToLight.t, toLightInfo);
+		if (!isIntersect || rayToLight.t > abs( glm::distance(rayToLight.point, light.pos)))
 		{
 			// Diffuse
 			float dotProd = max(0.f, dot(info.surfaceNormal, rayToLight.dir));
@@ -65,7 +71,6 @@ vec3 Renderer::Shading(Ray& ray, IntersectInfo info)
 			totalColor += diffuseTerm * info.material.diffuseCoeff;
 
 			// Specular
-			vec3 pointToView = normalize(cam.pos - info.surfacePoint);
 			vec3 halfVec = normalize(pointToView + rayToLight.dir);
 			float specAngle = max(dot(halfVec, info.surfaceNormal), 0.f);
 
@@ -74,7 +79,16 @@ vec3 Renderer::Shading(Ray& ray, IntersectInfo info)
 		}
 	}
 
-	vec3 ambientTerm = scene.ambientColor * scene.ambientIntense * info.material.diffuse;
-	totalColor += ambientTerm;
+	if (--depth <= 0)
+		return totalColor;
+
+	// Recursive
+	Ray recurRay(rayToLight.point, normalize(reflect(-ray.dir, info.surfaceNormal)));
+	IntersectInfo recursiveInfo;
+	if (scene.Intersect(recurRay, recurRay.t, recursiveInfo))
+	{
+		// Hit obj
+		totalColor += info.material.specularCoeff * Shading(recurRay, recursiveInfo, depth);
+	}
 	return totalColor;
 }
