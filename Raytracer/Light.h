@@ -4,12 +4,21 @@
 #include "glm\glm.hpp"
 
 using namespace glm;
-
-class Light
+class DirectionalLight
 {
 public:
-	Light(vec3 pos = vec3(0, 5, 0), vec3 color = vec3(1), float Intensity = 30)
-		:pos(pos), color(color), Intensity(Intensity)
+	DirectionalLight(vec3 dir = vec3(-1), float intensity = 1, vec3 color = vec3(1))
+		:dir(normalize(dir)), intensity(intensity), color(color)
+	{}
+	vec3 dir;
+	float intensity;
+	vec3 color;
+};
+class PointLight
+{
+public:
+	PointLight(vec3 pos = vec3(0, 5, 0), vec3 color = vec3(1), float intensity = 30)
+		:pos(pos), color(color), intensity(intensity)
 	{
 	}
 
@@ -17,7 +26,7 @@ public:
 
 	vec3 pos;
 	vec3 color;
-	float Intensity;
+	float intensity;
 };
 
 #endif

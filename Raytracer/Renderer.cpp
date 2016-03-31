@@ -7,7 +7,7 @@ void Renderer::Render()
 	{
 		for (int f2 = 0; f2 < cam.film->width; f2++)
 		{
-			cam.film->SetColor(f2, cam.film->height - f1 - 1, EvaluateLight(f2, f1));
+			cam.film->SetColor(f2, cam.film->height - f1 - 1, EvaluatePointLight(f2, f1));
 		}
 
 		// Checking progress
@@ -24,7 +24,7 @@ void Renderer::Render()
 }
 
 
-vec3 Renderer::EvaluateLight(int x, int y)
+vec3 Renderer::EvaluatePointLight(int x, int y)
 {
 	vec3 totalColor(0);
 	sampler.SetSampler(x, y);
@@ -55,26 +55,37 @@ vec3 Renderer::EvaluateLight(int x, int y)
 vec3 Renderer::Shading(Ray& ray, IntersectInfo info, int depth)
 {
 	vec3 totalColor(0);
-	Ray rayToLight(info.surfacePoint + 0.01f*info.surfaceNormal);
-	vec3 pointToView = normalize(cam.pos - rayToLight.point);
+	Ray rayToPointLight(info.surfacePoint + 0.01f*info.surfaceNormal);
+	vec3 pointToView = normalize(cam.pos - rayToPointLight.point);
 
-	for each (Light light in scene.lights)
+	// Directional Light
+	rayToPointLight.dir = -scene.directionalLight.dir;
+	IntersectInfo dLightInfo;
+	if (!scene.Intersect(rayToPointLight, rayToPointLight.t, dLightInfo))
 	{
-		rayToLight.dir = normalize(light.pos - rayToLight.point);
-		IntersectInfo toLightInfo;
-		bool isIntersect = scene.Intersect(rayToLight, rayToLight.t, toLightInfo);
-		if (!isIntersect || rayToLight.t > abs( glm::distance(rayToLight.point, light.pos)))
+		// Diffuse
+		float dotProd = max(0.f, dot(info.surfaceNormal, rayToPointLight.dir));
+		vec3 diffuseTerm = info.material.diffuse * scene.directionalLight.intensity * dotProd;
+		totalColor += diffuseTerm * info.material.diffuseCoeff;
+	}
+
+	for each (PointLight PointLight in scene.PointLights)
+	{
+		rayToPointLight.dir = normalize(PointLight.pos - rayToPointLight.point);
+		IntersectInfo toPointLightInfo;
+		bool isIntersect = scene.Intersect(rayToPointLight, rayToPointLight.t, toPointLightInfo);
+		if (!isIntersect || rayToPointLight.t > abs( glm::distance(rayToPointLight.point, PointLight.pos)))
 		{
 			// Diffuse
-			float dotProd = max(0.f, dot(info.surfaceNormal, rayToLight.dir));
-			vec3 diffuseTerm = info.material.diffuse * light.IntensAtPoint(info.surfacePoint)* dotProd;
+			float dotProd = max(0.f, dot(info.surfaceNormal, rayToPointLight.dir));
+			vec3 diffuseTerm = info.material.diffuse * PointLight.IntensAtPoint(info.surfacePoint)* dotProd;
 			totalColor += diffuseTerm * info.material.diffuseCoeff;
 
 			// Specular
-			vec3 halfVec = normalize(pointToView + rayToLight.dir);
+			vec3 halfVec = normalize(pointToView + rayToPointLight.dir);
 			float specAngle = max(dot(halfVec, info.surfaceNormal), 0.f);
 
-			totalColor += light.color * light.IntensAtPoint(info.surfacePoint)
+			totalColor += PointLight.color * PointLight.IntensAtPoint(info.surfacePoint)
 				*info.material.specularCoeff * pow(specAngle, info.material.specularPowFactor);
 		}
 	}
@@ -83,7 +94,7 @@ vec3 Renderer::Shading(Ray& ray, IntersectInfo info, int depth)
 		return totalColor;
 
 	// Recursive
-	Ray recurRay(rayToLight.point, normalize(reflect(-ray.dir, info.surfaceNormal)));
+	Ray recurRay(rayToPointLight.point, normalize(reflect(ray.dir, info.surfaceNormal)));
 	IntersectInfo recursiveInfo;
 	if (scene.Intersect(recurRay, recurRay.t, recursiveInfo))
 	{

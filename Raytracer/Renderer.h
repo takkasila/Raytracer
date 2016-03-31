@@ -26,7 +26,7 @@ public:
 	int maxDepth;
 
 private:
-	vec3 EvaluateLight(int x, int y);
+	vec3 EvaluatePointLight(int x, int y);
 	vec3 Shading(Ray& ray, IntersectInfo info, int depth);
 
 };

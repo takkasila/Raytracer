@@ -1,6 +1,6 @@
 #include "Light.h"
 
-float Light::IntensAtPoint(vec3 point)
+float PointLight::IntensAtPoint(vec3 point)
 {
-	return Intensity/pow(distance(point, pos) ,2);
+	return intensity / pow(distance(point, pos), 2);
 }

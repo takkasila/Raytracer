@@ -17,7 +17,8 @@ public:
 	bool Intersect(Ray& ray, double& t, IntersectInfo& info);
 
 	vector<Primitive> objs;
-	vector<Light> lights;
+	vector<PointLight> PointLights;
+	DirectionalLight directionalLight;
 	vec3 bgColor;
 	vec3 ambientColor;
 	float ambientIntense;
