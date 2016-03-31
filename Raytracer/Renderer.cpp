@@ -101,5 +101,9 @@ vec3 Renderer::Shading(Ray& ray, IntersectInfo info, int depth)
 		// Hit obj
 		totalColor += info.material.specularCoeff * Shading(recurRay, recursiveInfo, depth);
 	}
+	else
+	{
+		totalColor += info.material.specularCoeff * scene.bgColor;
+	}
 	return totalColor;
 }

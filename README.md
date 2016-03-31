@@ -4,6 +4,10 @@ A simple raytracer built with love :heart:
 ### History
 From recent to old
 
+![](https://drive.google.com/uc?export=view&id=0B8ZrSC4wBsYaUXFKX19MamxGU3M)
+
+![](https://drive.google.com/uc?export=view&id=0B8ZrSC4wBsYaRms5enIzQVBBWkE)
+
 ![](https://drive.google.com/uc?export=view&id=0B8ZrSC4wBsYaSHlKM3M1TFVqN28)
 
 ![](https://drive.google.com/uc?export=view&id=0B8ZrSC4wBsYaaTFpelZpVzBZbmc)
