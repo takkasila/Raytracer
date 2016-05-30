@@ -2,10 +2,8 @@
 
 bool Primitive::Intersect(Ray& ray, double& outT, IntersectInfo& info)
 {
-	if (sphere.Intersect(ray, outT))
+	if (shape.Intersect(ray, outT, info))
 	{
-		info.surfacePoint = ray.point + ray.dir * (float) outT;
-		info.surfaceNormal = normalize(info.surfacePoint - sphere.center);
 		info.material = this->material;
 		return true;
 	}

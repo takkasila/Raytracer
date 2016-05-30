@@ -94,7 +94,6 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Film.h" />
-    <ClInclude Include="GeometricPrimitive.h" />
     <ClInclude Include="IntersectInfo.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />

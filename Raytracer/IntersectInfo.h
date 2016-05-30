@@ -2,6 +2,7 @@
 #define INTERSECT_H
 
 #include "Material.h"
+class Shape;
 
 class IntersectInfo
 {
@@ -13,6 +14,6 @@ public:
 	vec3 surfacePoint;
 	vec3 surfaceNormal;
 	Material material;
+	const Shape* shape;
 };
-
 #endif

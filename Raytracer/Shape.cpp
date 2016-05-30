@@ -1,6 +1,6 @@
 #include "Shape.h"
 
-bool Sphere::Intersect(Ray& ray, double& outT)
+bool Sphere::Intersect(Ray& ray, double& outT, IntersectInfo& info)
 {
 	vec3 centerToPoint = ray.point - center;
 	double a = dot(ray.dir, ray.dir);
@@ -24,5 +24,19 @@ bool Sphere::Intersect(Ray& ray, double& outT)
 	if (outT < 0)
 		return false;
 
+	info.surfacePoint = ray.point + ray.dir * (float) outT;
+	info.surfaceNormal = normalize(info.surfacePoint - center);
+
 	return true;
+}
+
+bool Triangle::Intersect(Ray& ray, double& outT, IntersectInfo& info)
+{
+	// Point in plane
+	float tempT = (dot(p1, faceNormal) - dot(ray.point, faceNormal))/ dot(ray.dir, faceNormal);
+
+	// Check point inside
+	//dista
+
+	return false;
 }

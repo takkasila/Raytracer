@@ -5,6 +5,7 @@
 
 #include "Primitive.h"
 #include "Light.h"
+#include "IntersectInfo.h"
 
 using namespace std;
 

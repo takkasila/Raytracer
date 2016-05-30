@@ -8,12 +8,13 @@
 class Primitive
 {
 public:
-	Primitive(Sphere sphere, Material material)
-		:sphere(sphere), material(material)
+	Primitive(Shape& shape, Material material)
+		:shape(shape), material(material)
 	{}
 
 	bool Intersect(Ray& ray, double& outT, IntersectInfo& info);
-	Sphere sphere;
+	Shape& shape;
 	Material material;
+
 };
 #endif
