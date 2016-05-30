@@ -3,6 +3,7 @@
 
 void Renderer::Render()
 {
+	float status;
 	for (int f1 = 0; f1 < cam.film->height; f1++)
 	{
 		for (int f2 = 0; f2 < cam.film->width; f2++)
@@ -10,13 +11,11 @@ void Renderer::Render()
 			cam.film->SetColor(f2, cam.film->height - f1 - 1, EvaluatePointLight(f2, f1));
 		}
 
-		// Checking progress
-		if (f1 == (int) (cam.film->height / 4))
-			printf("25%%\n");
-		else if (f1 == (int) (cam.film->height / 2))
-			printf("50%%\n");
-		else if (f1 == (int) ((float) (2 * cam.film->height) / 3))
-			printf("75%%\n");
+		//// Checking progress
+		status = ((f1 / (float) cam.film->height) * 10);
+		if ( status == floorf(status))
+			printf("%d%%\n", (int)(status*10));
+
 	}
 	printf("100%%\n");
 	cam.film->SaveImage("Image 1.png");
@@ -38,7 +37,7 @@ vec3 Renderer::EvaluatePointLight(int x, int y)
 			// Hit obj
 			totalColor += Shading(ray, info, maxDepth);
 			// Ambient
-			vec3 ambientTerm = scene.ambientColor * scene.ambientIntense * info.material.diffuse;
+			vec3 ambientTerm = scene.bgColor * scene.ambientIntense * info.material.diffuse;
 			totalColor += ambientTerm;
 		}
 		else
@@ -55,7 +54,7 @@ vec3 Renderer::EvaluatePointLight(int x, int y)
 vec3 Renderer::Shading(Ray& ray, IntersectInfo info, int depth)
 {
 	vec3 totalColor(0);
-	Ray rayToPointLight(info.surfacePoint + 0.01f*info.surfaceNormal);
+	Ray rayToPointLight(info.surfacePoint + info.surfaceNormal);
 	vec3 pointToView = normalize(cam.pos - rayToPointLight.point);
 
 	// Directional Light

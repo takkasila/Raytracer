@@ -1,5 +1,5 @@
 #include "Shape.h"
-
+#include <stdio.h>
 bool Sphere::Intersect(Ray& ray, double& outT, IntersectInfo& info)
 {
 	vec3 centerToPoint = ray.point - center;
@@ -9,7 +9,7 @@ bool Sphere::Intersect(Ray& ray, double& outT, IntersectInfo& info)
 
 	// Solve quadratic equation
 	double det = b*b - 4 * a*c;
-	if (det < 0.0f)
+	if (det < 0)
 		return false;
 
 	double root1 = (-b + sqrt(det)) / (2 * a);
@@ -32,11 +32,30 @@ bool Sphere::Intersect(Ray& ray, double& outT, IntersectInfo& info)
 
 bool Triangle::Intersect(Ray& ray, double& outT, IntersectInfo& info)
 {
-	// Point in plane
-	float tempT = (dot(p1, faceNormal) - dot(ray.point, faceNormal))/ dot(ray.dir, faceNormal);
+	vec3 pvec = cross(ray.dir, p1p3);
+	float det = dot(p1p2, pvec);
 
-	// Check point inside
-	//dista
+	// Backface culling
+	if (det <= 0)
+		return false;
 
-	return false;
+	float invDet = 1 / det;
+
+	vec3 tvec = ray.point - p1;
+	float u = dot(tvec, pvec) * invDet;
+	if (u < 0 || u>1)
+		return false;
+
+	vec3 qvec = cross(tvec, p1p2);
+	float v = dot(ray.dir, qvec) * invDet;
+	if (v < 0 || v>1)
+		return false;
+
+	if (u + v > 1)
+		return false;
+
+	outT = dot(p1p3, qvec) *invDet;
+	info.surfacePoint = ray.point + ray.dir *(float) outT;
+	info.surfaceNormal = faceNormal;
+	return true;
 }
